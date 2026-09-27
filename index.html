@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday Aarti!</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
     
     <style>
         * {
             margin: 0; padding: 0; box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Fredoka One', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             user-select: none; 
             -webkit-tap-highlight-color: transparent; 
         }
@@ -52,7 +53,7 @@
 
         .loader-text {
             color: #fff; font-size: 20px; margin-bottom: 20px;
-            font-weight: bold; letter-spacing: 2px; text-shadow: 2px 2px 0 #000;
+            letter-spacing: 2px; text-shadow: 2px 2px 0 #000;
             text-align: center; padding: 0 20px;
         }
 
@@ -67,28 +68,36 @@
             border-radius: 10px; transition: width 0.1s linear;
         }
 
-        /* Main Glassmorphic Panel */
+        /* Main Glassmorphic Panel (FIXED FOR MOBILE SCROLLING) */
         #main-ui {
             display: none; opacity: 0;
             background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             border: 2px solid rgba(255, 255, 255, 0.5);
-            border-radius: 30px; padding: 40px 20px;
+            border-radius: 30px; padding: 30px 15px; /* Reduced mobile padding */
             text-align: center; box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
             max-width: 90%; width: 450px; z-index: 10;
+            max-height: 85vh; /* Prevents card from exceeding screen height */
+            overflow-y: auto; /* Enables internal scrolling */
             transform: translateY(20px);
             transition: opacity 1s ease, transform 1s cubic-bezier(0.68, -0.55, 0.265, 1.55), width 0.5s;
             animation: floatingCard 4s ease-in-out infinite alternate;
         }
+
+        /* Custom Scrollbar for Glassmorphism UI */
+        #main-ui::-webkit-scrollbar { width: 6px; }
+        #main-ui::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.6); border-radius: 10px; }
 
         @keyframes floatingCard {
             0% { transform: translateY(0px); }
             100% { transform: translateY(-10px); }
         }
 
+        /* Fluid typography for headers */
         h1 {
-            color: #ffffff; font-size: 3.5rem; line-height: 1.1; margin-bottom: 10px;
+            color: #ffffff; font-size: clamp(2.2rem, 8vw, 3.5rem); line-height: 1.1; margin-bottom: 10px;
             text-shadow: -3px -3px 0 #2d3436, 3px -3px 0 #2d3436, -3px 3px 0 #2d3436, 3px 3px 0 #2d3436, 5px 5px 0px rgba(0,0,0,0.4);
+            font-weight: normal;
         }
 
         .highlight { color: #ffd700; animation: pulseGlow 2s infinite; }
@@ -97,12 +106,14 @@
             50% { text-shadow: 0 0 30px #ffaa00, -3px -3px 0 #2d3436, 3px -3px 0 #2d3436, -3px 3px 0 #2d3436, 3px 3px 0 #2d3436; } 
         }
 
-        p.subtitle { font-size: 1.2rem; color: #2d3436; font-weight: bold; margin-bottom: 30px; text-shadow: 1px 1px 2px rgba(255,255,255,0.8); }
+        p.subtitle { 
+            font-size: clamp(1rem, 4vw, 1.2rem); color: #2d3436; margin-bottom: 25px; text-shadow: 1px 1px 2px rgba(255,255,255,0.8); 
+        }
 
         .reveal-btn {
             background: linear-gradient(45deg, #ff758c 0%, #ff7eb3 100%);
-            border: 3px solid #fff; padding: 15px 35px; font-size: 1.3rem;
-            font-weight: bold; color: #fff; border-radius: 50px; cursor: pointer;
+            border: 3px solid #fff; padding: 12px 25px; font-size: clamp(1rem, 4vw, 1.3rem);
+            color: #fff; border-radius: 50px; cursor: pointer;
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
             transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             text-shadow: 1px 1px 0 #000; animation: bounceBtn 2s infinite;
@@ -114,7 +125,7 @@
 
         /* Secret Message Area */
         #secret-message {
-            display: none; margin-top: 20px; padding: 25px;
+            display: none; margin-top: 15px; padding: 15px;
             background: rgba(255, 255, 255, 0.85); border-radius: 20px;
             border: 2px solid #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -124,18 +135,19 @@
         .content-split {
             display: flex;
             flex-direction: column; /* Default: Mobile Stacked */
-            gap: 20px;
+            gap: 15px;
             align-items: center;
         }
 
         /* Updated Polaroid Frame */
         .polaroid {
-            background: #ffe8ee; /* Soft pastel pink frame */
-            border: 2px solid #ffb6c1; /* Slightly darker pink border */
-            padding: 12px 12px 25px 12px; /* Extra padding at bottom for text */
+            background: #ffe8ee; 
+            border: 2px solid #ffb6c1; 
+            padding: 10px 10px 20px 10px; 
             box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
             transform: rotate(3deg);
-            width: 100%; max-width: 250px; border-radius: 6px;
+            width: 100%; max-width: 220px; border-radius: 6px;
+            margin: 0 auto;
         }
         
         .polaroid img { 
@@ -144,13 +156,13 @@
             box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
         }
 
-        /* New Handwritten Text */
+        /* Handwritten Text */
         .handwritten-caption {
             font-family: 'Brush Script MT', 'Segoe Print', 'Comic Sans MS', cursive;
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             color: #d63031;
             text-align: center;
-            margin-top: 15px;
+            margin-top: 10px;
             transform: rotate(-3deg);
             letter-spacing: 1px;
             text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
@@ -160,28 +172,30 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            text-align: center; /* Default for mobile */
+            text-align: center;
         }
+
+        .text-content h2 { font-size: clamp(1.2rem, 5vw, 1.5rem); color: #e84393; margin-bottom: 10px; }
+        .text-content p.body-text { color: #2d3436; font-size: clamp(0.9rem, 3.5vw, 1.05rem); line-height: 1.4; margin-bottom: 15px; font-family: 'Segoe UI', Tahoma, sans-serif; }
 
         /* Desktop Mode (Horizontal Split) */
         @media (min-width: 768px) {
+            #main-ui { padding: 40px 20px; }
             #main-ui.expanded {
                 width: 800px; /* Expand card on PC */
                 max-width: 95%;
             }
             .content-split {
-                flex-direction: row; /* Horizontal Layout */
+                flex-direction: row; 
                 text-align: left;
                 align-items: stretch;
+                gap: 25px;
             }
-            .text-content {
-                text-align: left; /* Align text left on PC */
-                flex: 1;
-            }
-            .polaroid {
-                transform: rotate(-2deg);
-                margin-right: 15px;
-            }
+            #secret-message { padding: 25px; }
+            .text-content { text-align: left; flex: 1; }
+            .polaroid { transform: rotate(-2deg); margin-right: 15px; max-width: 250px; }
+            .text-content h2 { font-size: 1.8rem; }
+            .text-content p.body-text { font-size: 1.1rem; line-height: 1.5; margin-bottom: 20px; }
         }
 
         @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
@@ -197,7 +211,7 @@
 
         /* Balloons */
         .balloon-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; overflow: hidden; }
-        .balloon-wrapper { position: absolute; bottom: -150px; pointer-events: auto; cursor: crosshair; padding: 20px; }
+        .balloon-wrapper { position: absolute; bottom: -150px; pointer-events: auto; cursor: crosshair; padding: 20px; z-index: 5;}
         .balloon { width: 60px; height: 75px; border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%; box-shadow: inset -5px -5px 10px rgba(0,0,0,0.1); position: relative; }
         .balloon::after { content: ""; position: absolute; bottom: -40px; left: 50%; width: 2px; height: 40px; background: rgba(0,0,0,0.2); }
         .balloon-wrapper:active { transform: scale(0.9); }
@@ -241,13 +255,13 @@
 
                 <!-- Right/Bottom: Text -->
                 <div class="text-content">
-                    <h2 style="color: #e84393; margin-bottom: 10px;">To my favorite person,</h2>
-                    <p style="color: #2d3436; font-size: 1.05rem; line-height: 1.5; margin-bottom: 20px;">
+                    <h2>To my favorite person,</h2>
+                    <p class="body-text">
                         8 whole years of We Know Each other! Honestly, you deserve a medal (and a massive cake) for surviving me this long. 😂 Thank you for being the absolute best part of my life. Happy Birthday to my favorite Person! Let's celebrate! 🎉
                     </p>
                     
                     <div style="background: rgba(255, 234, 167, 0.5); padding: 12px; border-radius: 10px; border: 2px dashed #fdcb6e;">
-                        <p style="font-weight: bold; color: #d35400; font-size: 1.1rem; margin: 0;"> mene Puja kar lee haa 😅😅</p>
+                        <p style="color: #d35400; font-size: clamp(0.95rem, 3.5vw, 1.1rem); margin: 0;"> mene Puja kar lee haa 😅😅</p>
                     </div>
                 </div>
             </div>
@@ -337,7 +351,7 @@
         let lastSparkleTime = 0;
         function handleSparkle(x, y) {
             const now = Date.now();
-            if (now - lastSparkleTime < 40) return; // Throttle to max 25 frames per second
+            if (now - lastSparkleTime < 40) return; 
             lastSparkleTime = now;
 
             if(Math.random() > 0.3) {
@@ -371,7 +385,6 @@
                 wrapper.appendChild(balloon);
                 container.appendChild(wrapper);
 
-                // Use the highly performant Web Animations API instead of injecting <style> tags
                 const durationMs = (Math.random() * 6 + 6) * 1000;
                 const anim = wrapper.animate([
                     { transform: 'translateY(10vh) rotate(-5deg)' },
@@ -382,10 +395,8 @@
                     fill: 'forwards'
                 });
 
-                // Remove from DOM when animation finishes
                 anim.onfinish = () => { if(container.contains(wrapper)) wrapper.remove(); };
 
-                // Handle Pop interaction
                 function popBalloon(e) {
                     e.preventDefault(); 
                     
